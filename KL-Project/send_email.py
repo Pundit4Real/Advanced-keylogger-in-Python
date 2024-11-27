@@ -8,7 +8,7 @@ import smtplib
 # from concurrent.futures import ThreadPoolExecutor
 import os
 import time
-from encrypt_and_decrypt import decrypt_files
+from cryptography.encrypt_and_decrypt import decrypt_files
 
 # logging
 logging.basicConfig(
