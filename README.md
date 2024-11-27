@@ -87,3 +87,57 @@ Run the program using:
    - Encrypts collected files before emailing them.
    - Decrypts files for local review (if needed).
 
+### **Advanced Features**
+
+- **Errors Logging** Included logging for tracking application errors and performance.
+  
+- **Threading**: Utilizes ThreadPoolExecutor for running multiple operations concurrently, ensuring performance and efficiency.
+
+---
+
+### **Security and Ethical Considerations**
+
+This software is for educational and testing purposes only. Unauthorized use of this tool on a machine you do not own or have explicit permission to monitor is illegal. Use responsibly and comply with local laws and regulations.
+
+---
+
+### **Customization**
+
+- Change the interval for screenshot capture in `screenshot_capture.py` by modifying the `time.sleep()` duration.
+  
+- Adjust the email sending frequency in `send_email.py` by changing the delay in the periodic email sending logic.
+
+---
+
+### **Converting to an Executable**
+
+You can convert this program to an `.exe` file using PyInstaller:
+
+1. **Install PyInstaller**:
+
+    ```bash
+    pip install pyinstaller
+    ```
+
+2. **Run**:
+
+    ```bash
+    pyinstaller --onefile --noconsole main.py
+    ```
+
+The executable will be available in the `dist` folder.
+
+### **Future Improvements**
+
+- **Network Check**: Automatically retries sending files if the host machine is offline.
+  
+- **Unsent Data Handling**: Queues unsent emails and attachments, ensuring all files are sent when connectivity is restored.
+- Add a GUI for easier configuration and control.
+- Store email settings in a secure, encrypted configuration file.
+
+---
+
+### **Disclaimer**
+
+This software is provided "as is," without warranty of any kind. The creators are not responsible for any misuse or damages caused by this program.
+
