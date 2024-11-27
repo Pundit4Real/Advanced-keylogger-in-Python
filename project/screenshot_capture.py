@@ -3,7 +3,7 @@ import time
 from PIL import ImageGrab
 
 # Folder path for screenshots
-screenshot_folder = "D:\\Python\\D.Dor\\KL\\"
+screenshot_folder = os.path.join(os.environ['appdata'], "KL")
 
 # Function to capture a single screenshot
 def capture_screenshot():

