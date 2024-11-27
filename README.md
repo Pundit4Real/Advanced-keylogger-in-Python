@@ -28,8 +28,8 @@ Ensure you have the following installed:
 
 ### **2. Clone the Repository**
 Clone the repository to your local system:
-```bash
-git clone https://github.com/your-username/keylogger-data-collector.git
+
+    git clone https://github.com/your-username/keylogger-data-collector.git
 cd keylogger-data-collector
 
 ### **3. Install Dependencies**
