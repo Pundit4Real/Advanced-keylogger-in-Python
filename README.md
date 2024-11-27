@@ -46,3 +46,10 @@ email_password = "your-email-app-password"
 recipient_email = "recipient-email@gmail.com"
 
 Note: Use an app-specific password for Gmail or ensure the email service allows less secure apps.
+
+### **5. Run the Program**
+Run the program using:
+
+```bash
+python main.py
+
