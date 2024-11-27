@@ -16,7 +16,6 @@ A Python-based multi-threaded application for capturing system data, keystrokes,
 
 ---
 
-
 ---
 
 ## **Setup and Installation**
@@ -30,12 +29,12 @@ Ensure you have the following installed:
 Clone the repository to your local system:
 
     git clone https://github.com/your-username/keylogger-data-collector.git
-cd keylogger-data-collector
+    cd keylogger-data-collector
 
 ### **3. Install Dependencies**
 Install the required Python libraries listed in `requirements.txt`:
-```bash
-pip install -r requirements.txt
+
+        pip install -r requirements.txt
 
 
 ### **4. Configure Email Settings**
