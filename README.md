@@ -29,7 +29,7 @@ Ensure you have the following installed:
 Clone the repository to your local system:
 
     git clone https://github.com/your-username/keylogger-data-collector.git
-    cd keylogger-data-collector
+    cd KL-Project
 
 ### **3. Install Dependencies**
 Install the required Python libraries listed in `requirements.txt`:
