@@ -51,3 +51,39 @@ Run the program using:
 
         python main.py
 
+### **How It Works**
+
+- **Keylogger**: Captures keystrokes and saves them in a file within a designated directory.
+  
+- **System Data Collection**:
+  - Captures system information and saved Wi-Fi passwords.
+  - Reads the clipboard's current content.
+  
+- **Screenshots**: Periodically captures screenshots and saves them to a designated folder.
+  
+- **Encryption**: Encrypts all collected files before sending them via email.
+  
+- **Email Sending**: Periodically sends the collected and encrypted data to the configured email address.
+
+
+### **Modules and Components**
+
+1. **data_collection.py**
+   - Handles:
+     - Capturing system information.
+     - Running the keylogger.
+     - Extracting Wi-Fi passwords.
+     - Reading clipboard content.
+
+2. **screenshot_capture.py**
+   - Captures periodic screenshots and stores them in a folder.
+
+3. **send_email.py**
+   - Packages and sends data files to an email.
+   - Detects network connectivity before attempting to send emails.
+   - Queues unsent data for later delivery when connectivity is restored.
+
+4. **cryptography/encrypt_and_decrypt.py**
+   - Encrypts collected files before emailing them.
+   - Decrypts files for local review (if needed).
+
