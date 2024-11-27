@@ -50,6 +50,5 @@ Note: Use an app-specific password for Gmail or ensure the email service allows 
 ### **5. Run the Program**
 Run the program using:
 
-```bash
-python main.py
+        python main.py
 
