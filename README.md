@@ -40,13 +40,12 @@ Install the required Python libraries listed in `requirements.txt`:
 ### **4. Configure Email Settings**
 Update the `send_email.py` file with your email credentials:
 
-```python
-email_address = "your-email@gmail.com"  
-email_password = "your-email-app-password"
-recipient_email = "recipient-email@gmail.com"
+        email_address = "your-email@gmail.com"  
+        email_password = "your-email-app-password"
+        recipient_email = "recipient-email@gmail.com"
 
 Note: Use an app-specific password for Gmail or ensure the email service allows less secure apps.
-```python
+
 ### **5. Run the Program**
 Run the program using:
 
